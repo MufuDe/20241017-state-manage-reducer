@@ -18,8 +18,7 @@ export default function Chat({ contact, message, dispatch }) {
         onClick={() => {
           alert(`正在发送 "${message}" 到 ${contact.email}`);
           dispatch({
-            type: "edited_message",
-            message: "",
+            type: "sent_message",
           });
         }}
       >
