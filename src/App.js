@@ -3,17 +3,17 @@ import Section from "./Section.js";
 
 export default function Page() {
   return (
-    <Section level={1}>
+    <Section>
       <Heading>主标题</Heading>
-      <Section level={2}>
+      <Section>
         <Heading>副标题</Heading>
         <Heading>副标题</Heading>
         <Heading>副标题</Heading>
-        <Section level={3}>
+        <Section>
           <Heading>子标题</Heading>
           <Heading>子标题</Heading>
           <Heading>子标题</Heading>
-          <Section level={4}>
+          <Section>
             <Heading>子子标题</Heading>
             <Heading>子子标题</Heading>
             <Heading>子子标题</Heading>
