@@ -1,10 +1,33 @@
-import { useReducer } from "react";
+import { useImmerReducer } from "use-immer";
 import AddTask from "./AddTask.js";
 import TaskList from "./TaskList.js";
-import tasksReducer from "./tasksReducer.js";
+
+function tasksReducer(draft, action) {
+  switch (action.type) {
+    case "added": {
+      draft.push({
+        id: action.id,
+        text: action.text,
+        done: false,
+      });
+      break;
+    }
+    case "changed": {
+      const index = draft.findIndex((t) => t.id === action.task.id);
+      draft[index] = action.task;
+      break;
+    }
+    case "deleted": {
+      return draft.filter((t) => t.id !== action.id);
+    }
+    default: {
+      throw Error("未知 action：" + action.type);
+    }
+  }
+}
 
 export default function TaskApp() {
-  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+  const [tasks, dispatch] = useImmerReducer(tasksReducer, initialTasks);
 
   function handleAddTask(text) {
     dispatch({
