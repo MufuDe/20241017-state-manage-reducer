@@ -1,42 +1,56 @@
-import Heading from "./Heading.js";
-import Section from "./Section.js";
+import { useState } from "react";
+import { places } from "./data.js";
+import { getImageUrl } from "./utils.js";
 
-export default function ProfilePage() {
+export default function App() {
+  const [isLarge, setIsLarge] = useState(false);
+  const imageSize = isLarge ? 150 : 100;
   return (
-    <Section>
-      <Heading>My Profile</Heading>
-      <Post title="旅行者，你好！" body="来看看我的冒险。" />
-      <AllPosts />
-    </Section>
+    <>
+      <label>
+        <input
+          type="checkbox"
+          checked={isLarge}
+          onChange={(e) => {
+            setIsLarge(e.target.checked);
+          }}
+        />
+        Use large images
+      </label>
+      <hr />
+      <List imageSize={imageSize} />
+    </>
   );
 }
 
-function AllPosts() {
-  return (
-    <Section>
-      <Heading>帖子</Heading>
-      <RecentPosts />
-    </Section>
-  );
+function List({ imageSize }) {
+  const listItems = places.map((place) => (
+    <li key={place.id}>
+      <Place place={place} imageSize={imageSize} />
+    </li>
+  ));
+  return <ul>{listItems}</ul>;
 }
 
-function RecentPosts() {
+function Place({ place, imageSize }) {
   return (
-    <Section>
-      <Heading>最近的帖子</Heading>
-      <Post title="里斯本的味道" body="...那些蛋挞！" />
-      <Post title="探戈节奏中的布宜诺斯艾利斯" body="我爱它！" />
-    </Section>
-  );
-}
-
-function Post({ title, body }) {
-  return (
-    <Section isFancy={true}>
-      <Heading>{title}</Heading>
+    <>
+      <PlaceImage place={place} imageSize={imageSize} />
       <p>
-        <i>{body}</i>
+        <b>{place.name}</b>
+        {": " + place.description}
       </p>
-    </Section>
+    </>
+  );
+}
+
+function PlaceImage({ place, imageSize }) {
+  return (
+    <img
+      src={getImageUrl(place)}
+      alt={place.name}
+      width={imageSize}
+      height={imageSize}
+    />
   );
 }
